@@ -2,6 +2,8 @@ package org.example.sun.configuration;
 
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.*;
 
 import java.util.ArrayList;
@@ -49,6 +51,15 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
                 .maxAge(168000)    // 预检间隔时间
                 .allowedHeaders("*")  // 允许头部设置
                 .allowCredentials(true);    // 是否发送cookie
+    }
+
+    /**
+     * 处理返回string 数据时候 出现转换的问题
+     * @param converters
+     */
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(0, new MappingJackson2HttpMessageConverter());
     }
 
 

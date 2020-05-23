@@ -1,6 +1,7 @@
 package org.example.sun.controller.demo;
 
 
+import org.apache.commons.lang.time.DateUtils;
 import org.example.sun.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 
 @Controller
@@ -26,7 +28,7 @@ public class DemoPublicController {
         //redisTemplate.opsForValue().get("sunmingan");
 
         if(!redisUtil.hasKey(key)){
-            redisUtil.set(key, "你好我是心来的",1000);
+            redisUtil.set(key, "你好我是心来的"+ new Date().getTime(),2);
         }
         return redisUtil.get(key).toString();
 

@@ -31,17 +31,8 @@ public class LoginController {
         if(user == null){
             throw new CommException("缺少参数");
         }
-        if(!"admin".equals(user.getUserName())){
-            throw new CommException("没有当前账号！");
-        }
 
-        long expiredTime = DateTime.now().plusDays(7).getMillis();
-        Map<String,Object> tokenData = new HashMap<>();
-        tokenData.put("userId","111234");
-        String token = JwtHelper.createToken(tokenData,expiredTime);
-        Map<String,Object> map = new HashMap<>();
-        map.put("token",token);
-        return map;
+        return userService.get(user);
     }
 
 

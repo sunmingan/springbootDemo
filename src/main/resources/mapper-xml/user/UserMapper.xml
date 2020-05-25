@@ -17,11 +17,25 @@
         FROM user
     </select>
 
-    <select id="getOne" parameterType="java.lang.Long" resultMap="BaseResultMap" >
+    <select id="getOne" parameterType="java.lang.String" resultMap="BaseResultMap" >
         SELECT
         <include refid="Base_Column_List" />
         FROM user
         WHERE id = #{id}
+    </select>
+
+    <select id="getUserList" parameterType="org.example.sun.model.user.User" resultMap="BaseResultMap" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM user
+        <trim prefix="where" prefixOverrides="and">
+            <if test="userName != null and userName.length() > 0">
+                and user_name = #{userName}
+            </if>
+            <if test="passWord != null and passWord.length() > 0">
+                and pass_word = #{passWord}
+            </if>
+        </trim>
     </select>
 
     <insert id="insert" >
@@ -32,7 +46,7 @@
             (#{id}, #{userName}, #{passWord})
     </insert>
 
-    <delete id="delete" parameterType="java.lang.Long" >
+    <delete id="delete" parameterType="java.lang.String" >
        DELETE FROM
              user
        WHERE
